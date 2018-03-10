@@ -12,8 +12,35 @@ app.use(session({
 	}
 }));
 
-app.get('/', (req,res) => {
-	res.send('Genome Link example');
+var hbs = require('express-handlebars')({
+	defaultLayout: 'main',
+	extname: '.hbs'
+});
+
+app.engine('hbs',hbs);
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
+
+app.get('/', async (req,res) => {
+  const scope = 'report:blood-glucose report:iron report:calcium report:vitamin-b12 report:vitamin-a report:milk-allergy report:peanuts-allergy report:egg-allergy';
+  const authorizeUrl = genomeLink.OAuth.authorizeUrl({ scope: scope });
+	console.log('help');
+  // Fetching a protected resource using an OAuth2 token if exists.
+  let reports = [];
+  if (req.session.oauthToken) {
+    const scopes = scope.split(' ');
+    reports = await Promise.all(scopes.map( async (name) => {
+      return await genomeLink.Report.fetch({
+        name: name.replace(/report:/g, ''),
+        population: 'european',
+        token: req.session.oauthToken
+      });
+    }));
+  }
+	// res.render('index', {
+  //   authorize_url: authorizeUrl,
+  //   reports: reports,
+  // });
 });
 
 app.get('/callback', async (req, res) => {
