@@ -1,0 +1,25 @@
+{
+  "name": "gnom_genome_hackathon",
+  "version": "1.0.0",
+  "description": "support for genome hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pratouis/gNOM_genome_hackathon.git"
+  },
+  "author": "bianca, frank, kevin, persis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pratouis/gNOM_genome_hackathon/issues"
+  },
+  "homepage": "https://github.com/pratouis/gNOM_genome_hackathon#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "genomelink-node": "^0.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
