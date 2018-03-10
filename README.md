@@ -4,6 +4,12 @@ Idea: shopping cart curated based on genome LINK API indicators
 Frontend framework: React!!
 Backend framework: Express and fetch and filestream/event-stream perhaps
 
+Milestones
+=====
+- OAUTH
+- a page that shows you all the traits and all the values 
+- interact with yummly or other API
+
 Endpoints
 ======
 - to be added
