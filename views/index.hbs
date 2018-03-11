@@ -5,29 +5,29 @@
             .background {
                 background-color: #5cb85c;
             }
-            .container {
-                background-color: blue;
-            }
-            .heading {
-                background-color: red;
-            }
         </style>
     </head>
 
     <body class="background">
-        <h2 class="heading">Welcome</h2>
-            <div class="container">
+        <div class="row">
+            <div class="col-m-6">
+                <h2 class="heading">Welcome</h2>
+            </div>
+        </div>
+            <div class="container-fluid">
                 <div>
                     {{#each categories}}
                    <h3>{{@key}}</h3>
-                   <ul>
-                     {{#each this}}
-                       <li>{{name}}</li>
-                       <!-- <ul style="display=none;">
-                         <li>{{description}}</li>
-                       </ul> -->
-                     {{/each}}
-                   </ul>
+                   <div class="">
+                       <ul>
+                         {{#each this}}
+                           <li>{{name}}</li>
+                           <!-- <ul style="display=none;">
+                             <li>{{description}}</li>
+                           </ul> -->
+                         {{/each}}
+                       </ul>
+                   </div>
 
                   {{/each}}
                 </div>
