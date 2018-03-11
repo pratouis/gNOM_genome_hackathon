@@ -1,11 +1,22 @@
 .navbar-brand img{
   padding-bottom:5px;
   margin-left:10px;
-
 }
 .title{
   float:left;
   font-size: 1.2em;
   font-weight:600;
   margin-left:0px;
+}
+.category-key{
+  text-transform: capitalize;
+}
+.card-header{
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.card-header:first-child{
+  border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
 }

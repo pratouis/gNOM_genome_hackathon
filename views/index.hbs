@@ -1,14 +1,27 @@
-<h1 class = "hkeading"> welcome </h1>
 
-<table class="conatiner">
-  <tbody>
-    {{#each reports}}
-    <tr>
-      <td> {{phenotype.display_name}} </td>
-      <td> {{summary.text}} </td>
-      <td> {{summary.score}} </td>
-    </tr>
-    {{/each}}
-  </tbody>
+<div class="container main-page">
 
-</table>
+  {{#each categories}}
+   <h2 class="category-key">{{@key}}</h2>
+     {{#each this}}
+       <div id="accordion{{@index}}">
+         <div class="card">
+           <div class="card-header" id="headingOne">
+             <h5 class="mb-0">
+               <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 {{name}}
+               </button>
+             </h5>
+           </div>
+           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion{{@index}}">
+             <div class="card-body">
+               {{description}}
+             </div>
+           </div>
+         </div>
+       </div>
+     {{/each}}
+  {{/each}}
+
+
+</div>
