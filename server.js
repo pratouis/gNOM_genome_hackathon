@@ -14,7 +14,26 @@ app.use(session({
 
 var hbs = require('express-handlebars')({
 	defaultLayout: 'main',
-	extname: '.hbs'
+	extname: '.hbs',
+	helpers: {
+		grouped_each: function(every, context, options) {
+	    var out = "", subcontext = [], i;
+	    if (context && context.length > 0) {
+	        for (i = 0; i < context.length; i++) {
+	            if (i > 0 && i % every === 0) {
+	                out += options.fn(subcontext);
+	                subcontext = [];
+	            }
+	            subcontext.push(context[i]);
+	        }
+	        out += options.fn(subcontext);
+	    }
+	    return out;
+		},
+		log: function(something) {
+  		console.log(something);
+		}
+	}
 });
 
 app.engine('hbs',hbs);
@@ -45,7 +64,7 @@ app.get('/logout', (req, res) => {
 });
 
 let determineEdamamParams = (trait, score) => {
-	switch(trait){
+	switch(trait.toUpperCase()){
 		case('BLOOD GLUCOSE'):
 			if(score>2){
 					return "q=low-sugar&health=sugar-conscious";
@@ -95,7 +114,7 @@ app.get('/', async(req, res) => {
 			token: req.session.oauthToken
 		}).then((response) => {
 			let obj = Object.assign({},
-				{name: response.phenotype.display_name.toUpperCase()},
+				{name: response.phenotype.display_name.toLowerCase()},
 				{score: response.summary.score},
 				{description: response.summary.text},
 				{id: response.phenotype.url_name});
@@ -109,14 +128,14 @@ app.get('/', async(req, res) => {
 	let categories = {};
 	// let categories = { 'deficiencies': [], 'excess': [], 'normal':[] , 'allergies':[] };
 	reports.forEach((report) => {
-		if(report.name.includes('ALLERGY')){
-			categories.allergies ? categories.allergies.push(report): categories.allergies = [report];
+		if(report.name.includes('allergy')){
+			categories.Allergies ? categories.Allergies.push(report): categories.Allergies = [report];
 		}else if(report.score < 2){
-			categories.deficiencies ? categories.deficiencies.push(report): categories.deficiencies = [report];
+			categories.Deficiencies ? categories.Deficiencies.push(report): categories.Deficiencies = [report];
 		}else if(report.score === 2){
-			categories.normal ? categories.normal.push(report): categories.normal = [report];
+			categories.Normal ? categories.Normal.push(report): categories.Normal = [report];
 		}else{
-			categories.excess ? categories.excess.push(report): categories.excess = [report];
+			categories.Excess ? categories.Excess.push(report): categories.Excess = [report];
 		}
 	})
 	res.render('index', { categories: categories });
