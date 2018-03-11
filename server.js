@@ -53,6 +53,10 @@ app.get('/login', (req, res) => {
 			res.render('login', { authorize_url: authorizeUrl});
 });
 
+app.get('/nutrients', (req, res) => {
+		res.render('nutrients')
+})
+
 app.get('/logout', (req, res) => {
 		req.session.destroy((err) => {
 			if(err){
@@ -114,7 +118,7 @@ app.get('/', async(req, res) => {
 			token: req.session.oauthToken
 		}).then((response) => {
 			let obj = Object.assign({},
-				{name: response.phenotype.display_name.toLowerCase()},
+				{name: response.phenotype.display_name},
 				{score: response.summary.score},
 				{description: response.summary.text},
 				{id: response.phenotype.url_name});
