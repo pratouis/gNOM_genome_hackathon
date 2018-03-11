@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <title>Bootstrap Example</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     </head>
 
     <body class="background">
@@ -34,8 +38,60 @@
                        </div>
                     </div>
                   {{/each}}
+                  <div class="geneChart ct-bar col-xs-8"></div>
                 </div>
             </div>
+              <script>
+              var data = {
+                labels: "{{labels}}".split(','),
+                series: [
+                  [{{series}}]
+                ]
+              };
+
+              var options = {
+                high: 6,
+                low: 0,
+                height: '300px',
+                axisX: {
+                  showLabel: true,
+                  showGrid: false,
+                  labelOffset: {
+                    x: 1,
+                    y: 1
+                  }
+                },
+                axisY: {
+                  showLabel: true,
+                  showGrid: true,
+                  labelInterpolationFnc: function(value) {
+                  return value-1
+                },
+                chartPadding: {
+                  top: 15,
+                  right: 15,
+                  bottom: 15,
+                  left: 15
+                },
+                // Specify the distance in pixel of bars in a group
+                onlyInteger: true
+                }
+              };
+                var chart = new Chartist.Bar('.ct-bar', data, options);
+
+                chart.on('draw', function(context) {
+                // First we want to make sure that only do something when the draw event is for bars. Draw events do get fired for labels and grids too.
+                if(context.type === 'bar') {
+                  // With the Chartist.Svg API we can easily set an attribute on our bar that just got drawn
+                  var _value = context.value > 2 ? context.value-2 : context.value;
+                  context.element.attr({
+                    // Now we set the style attribute on our bar to override the default color of the bar. By using a HSL colour we can easily set the hue of the colour dynamically while keeping the same saturation and lightness. From the context we can also get the current value of the bar. We use that value to calculate a hue between 0 and 100 degree. This will make our bars appear green when close to the maximum and red when close to zero.
+                    style: 'stroke: hsl(' + Math.floor(Chartist.getMultiValue(_value) / 5 * 100) + ', 50%, 50%);'
+                  });
+                }
+              });
+
+              </script>
             <script>
                 $(document).ready(function(){
                     $('[data-toggle="popover"]').popover();
