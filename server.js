@@ -55,6 +55,10 @@ app.get('/login', (req, res) => {
 
 app.get('/nutrients', (req, res) => {
 		res.render('nutrients')
+});
+
+app.get('/list', (req, res) => {
+	res.render('list')
 })
 
 app.get('/logout', (req, res) => {
