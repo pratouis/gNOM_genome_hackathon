@@ -22,14 +22,23 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
+
 const scope = 'report:blood-glucose report:milk-allergy report:peanuts-allergy report:egg-allergy report:carbohydrate-intake report:protein-intake';
 
 app.get('/login', (req, res) => {
-  const authorizeUrl = genomeLink.OAuth.authorizeUrl({ scope: scope });
-
-	res.render('login', { authorize_url: authorizeUrl});
+			const authorizeUrl = genomeLink.OAuth.authorizeUrl({ scope: scope });
+			res.render('login', { authorize_url: authorizeUrl});
 });
 
+app.get('/logout', (req, res) => {
+		req.session.destroy((err) => {
+			if(err){
+				res.status(500).send('unable to logout');
+			}else{
+				res.redirect('/login');
+			}
+		})
+});
 
 app.get('/', async(req, res) => {
 	if (!req.session.oauthToken) {
@@ -43,9 +52,31 @@ app.get('/', async(req, res) => {
 			name: name.replace(/report:/g, ''),
 			population: 'european',
 			token: req.session.oauthToken
-		});
+		}).then((response) => {
+			return Object.assign({},
+				{name: response.phenotype.display_name.toUpperCase()},
+				{score: response.summary.score},
+				{description: response.summary.text});
+		}).catch((err) =>
+			res.status(404).send('your report is not found\n'+err)
+		);
 	}));
-	res.render('index', { reports: reports });
+
+	let categories = {};
+	// let categories = { 'deficiencies': [], 'excess': [], 'normal':[] , 'allergies':[] };
+	reports.forEach((report) => {
+		if(report.name.includes('ALLERGY')){
+			categories.allergies ? categories.allergies.push(report): categories.allergies = [report];
+		}else if(report.score < 2){
+			categories.deficiencies ? categories.deficiencies.push(report): categories.deficiencies = [report];
+		}else if(report.score === 2){
+			categories.normal ? categories.normal.push(report): categories.normal = [report];
+		}else{
+			categories.excess ? categories.excess.push(report): categories.excess = [report];
+		}
+	})
+	// res.json(categories);
+	res.render('index', { categories: categories });
 });
 
 // app.get('/login', async (req,res) => {
@@ -69,6 +100,10 @@ app.get('/', async(req, res) => {
 //   //   reports: reports,
 //   // });
 // });
+
+app.get('/insight/:healthIndicator', (req, res) => {
+	res.status(500).send('not implemented');
+})
 
 app.get('/callback', async (req, res) => {
   // The user has been redirected back from the provider to your registered
