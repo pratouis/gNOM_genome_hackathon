@@ -8,7 +8,7 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
-		maxAge: 30*60*1000
+		maxAge: 5*30*60*1000
 	}
 }));
 
@@ -20,6 +20,8 @@ var hbs = require('express-handlebars')({
 app.engine('hbs',hbs);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/public'));
+
 
 const scope = 'report:blood-glucose report:milk-allergy report:peanuts-allergy report:egg-allergy report:carbohydrate-intake report:protein-intake';
 
@@ -100,7 +102,7 @@ app.get('/', async(req, res) => {
 // });
 
 app.get('/insight/:healthIndicator', (req, res) => {
-	
+	res.status(500).send('not implemented');
 })
 
 app.get('/callback', async (req, res) => {

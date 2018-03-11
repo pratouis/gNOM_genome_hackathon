@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pratouis/gNOM_genome_hackathon#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "genomelink-node": "^0.1.2",
     "react": "^16.2.0",
