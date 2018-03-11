@@ -1,11 +1,79 @@
 .navbar-brand img{
   padding-bottom:5px;
   margin-left:10px;
-
 }
 .title{
   float:left;
   font-size: 1.2em;
   font-weight:600;
   margin-left:0px;
+}
+.btn-link {
+  font-weight: 400;
+  font-size: 1.5em !important;
+  color: #007bff;
+  background-color: transparent;
+  }
+.btn{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.card{
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+
+
+}
+.category-key{
+  text-transform: capitalize;
+}
+
+.card-header{
+  padding:3px;
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+.card-header:first-child{
+  border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+
+.show-me{
+  display: none;
+  font-size:1.4em;
+}
+.btn:hover{
+  cursor:pointer;
+}
+
+.card:hover .show-me{
+  display:block;
+  padding:10px;
+  margin-bottom: 5px;
+
 }

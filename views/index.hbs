@@ -1,16 +1,25 @@
-<h2 class="heading"> Your dietary tendencies based on your genome </h2>
-<br/>
-<br/>
 
-<table class="container">
-  <tbody>
-    {{#each reports}}
-    <tr>
-      <td> {{phenotype.display_name}} </td>
-      <td> {{summary.text}} </td>
-      <td> {{summary.score}} </td>
-    </tr>
-    {{/each}}
-  </tbody>
+<div class="container main-page">
 
-</table>
+  {{#each categories}}
+   <h2 class="category-key">{{@key}}</h2>
+     {{#each this}}
+       <div id="accordion{{id}}">
+         <div class="card">
+           <div class="card-header cheader" id="headingOne{{id}}">
+             <h7 >
+               <button class="btn btn-link" >
+                 {{name}}
+               </button>
+             </h7>
+           </div>
+           <div class="show-me" id="collapseOne{{id}}">
+             <div class="card-body">
+               {{description}}
+             </div>
+           </div>
+         </div>
+       </div>
+     {{/each}}
+  {{/each}}
+</div>
