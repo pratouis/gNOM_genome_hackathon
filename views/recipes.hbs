@@ -1,0 +1,16 @@
+  <div class="container-fluid">
+{{#each recipes}}
+
+    <div class="row">
+        <div class="col-md-6">
+                <a href="{{recipe.url}}">
+                  <img class="media-object" src={{recipe.image}} alt={{recipe.label}}>
+                </a>
+        </div>
+        <div class="col-md-6">
+                <h4 class="media-heading">{{recipe.label}}</h4>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+        </div>
+  </div>
+{{/each}}
+  </div>
