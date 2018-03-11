@@ -76,7 +76,7 @@ let determineEdamamParams = (trait, score) => {
 			return;
 		case('PROTEIN INTAKE'):
 			if(score<2){
-					return "diet=protein&diet=high-protein"
+					return "q=protein&diet=high-protein"
 			}
 			return;
 		case('MILK ALLERGY'):
@@ -130,8 +130,10 @@ app.get('/', async(req, res) => {
 	}));
 
 	let categories = {};
-	// let categories = { 'deficiencies': [], 'excess': [], 'normal':[] , 'allergies':[] };
+	let labels = [], series= [];
 	reports.forEach((report) => {
+		labels.push(report.name);
+		series.push(report.score+1);
 		if(report.name.includes('allergy')){
 			categories.Allergies ? categories.Allergies.push(report): categories.Allergies = [report];
 		}else if(report.score < 2){
@@ -142,7 +144,7 @@ app.get('/', async(req, res) => {
 			categories.Excess ? categories.Excess.push(report): categories.Excess = [report];
 		}
 	})
-	res.render('index', { categories: categories });
+	res.render('index', { categories: categories, labels: labels, series: series });
 });
 
 
