@@ -1,15 +1,26 @@
-<h2> Your dietary tendencies based on your genome </h2>
-<br/>
-<br/>
-<table>
-  <tbody>
-    {{#each reports}}
-    <tr>
-      <td> {{phenotype.display_name}} </td>
-      <td> {{summary.text}} </td>
-      <td> {{summary.score}} </td>
-    </tr>
-    {{/each}}
-  </tbody>
+<h1 class = "heading"> Your genetic dietary profile </h1>
 
-</table>
+<style>
+    .background {
+        background-color: #5cb85c
+    }
+</style>
+
+<body class="background">
+    <div class="container">
+        <div>
+            {{#each categories}}
+           <h3>{{@key}}</h3>
+           <ul>
+             {{#each this}}
+               <li>{{name}}</li>
+               <!-- <ul style="display=none;">
+                 <li>{{description}}</li>
+               </ul> -->
+             {{/each}}
+           </ul>
+
+          {{/each}}
+        </div>
+    </div>
+</body>
