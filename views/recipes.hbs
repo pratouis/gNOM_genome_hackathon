@@ -1,17 +1,30 @@
 
   <div class="container-fluid">
-    {{#each recipes}}
-      <div class="col-xs-4">
-        <div class="thumbnail" style="height: 290px;">
-          <div style="padding: 5px">
-          <a href="{{recipe.url}}">
-            <img class="media-object" src={{recipe.image}} alt={{recipe.label}} height="100px">
-          </a>
-        </div>
-          <div class="caption">
-            <h5>{{recipe.label}}</h5>
+    {{#grouped_each 3 recipes}}
+      <div class="row">
+      {{#each this}}
+        <div class="col-sm-4">
+          <div class="thumbnail"> <!-- style="height: 290px;" -->
+            <div style="padding: 5px">
+            <a href="{{recipe.url}}">
+              <img class="media-object img-responsive"  src={{recipe.image}} alt={{recipe.label}} height="100px">
+            </a>
+          </div>
+            <div class="caption">
+              <h5>{{recipe.label}}</h5>
+              {{#recipe.healthLabels }}
+              <span class="label label-success" style="display: inline-block">{{this}}</span>
+              {{/recipe.healthLabels}}
+              {{#recipe.dietLabels }}
+              <span class="label label-info" style="display: inline-block">{{this}}</span>
+              {{/recipe.dietLabels}}
+              {{#recipe.cautions }}
+              <span class="label label-danger" style="display: inline-block">{{this}}</span>
+              {{/recipe.cautions}}
+            </div> 
           </div>
         </div>
+      {{/each}}
       </div>
-  {{/each}}
+    {{/grouped_each}}
   </div>
