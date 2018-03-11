@@ -23,6 +23,10 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 
+/* for edamam API */
+// const dietOptions = [“balanced”, “high-protein”, “high-fiber”, “low-fat”, “low-carb”, “low-sodium”];
+// const healthOptions = [“vegan”, “vegetarian”, “paleo”, “dairy-free”, “gluten-free”, “wheat-free”, “fat-free”, “low-sugar”, “egg-free”, “peanut-free” ];
+
 const scope = 'report:blood-glucose report:milk-allergy report:peanuts-allergy report:egg-allergy report:carbohydrate-intake report:protein-intake';
 
 app.get('/login', (req, res) => {
@@ -40,6 +44,43 @@ app.get('/logout', (req, res) => {
 		})
 });
 
+let determineEdamamParams = (trait, score) => {
+	switch(trait){
+		case('BLOOD GLUCOSE'):
+			if(score>2){
+					return "q=low-sugar&health=sugar-conscious";
+			}
+			return;
+		case('PROTEIN INTAKE'):
+			if(score<2){
+					return "diet=protein&diet=high-protein"
+			}
+			return;
+		case('MILK ALLERGY'):
+			if(score < 2){
+				return "q=dairy-free";
+			}
+			return;
+		case('PEANUTS ALLERGY'):
+			if(score < 2){
+				return "q=peanut-free&health=peanut-free"
+			}
+			return;
+		case('EGG ALLERGY'):
+			if(score < 2){
+				return "q=egg-free";
+			}
+			return;
+		case('CARBOHYDRATE INTAKE'):
+			if(score < 2){
+				return "q=low-carb&diet=low-carb";
+			}
+		default:
+			return;
+	}
+}
+
+
 app.get('/', async(req, res) => {
 	if (!req.session.oauthToken) {
 		res.redirect('/login');
@@ -53,10 +94,13 @@ app.get('/', async(req, res) => {
 			population: 'european',
 			token: req.session.oauthToken
 		}).then((response) => {
-			return Object.assign({},
+			let obj = Object.assign({},
 				{name: response.phenotype.display_name.toUpperCase()},
 				{score: response.summary.score},
-				{description: response.summary.text});
+				{description: response.summary.text},
+				{id: response.phenotype.url_name});
+			obj.query = determineEdamamParams(obj.name, obj.score);
+			return obj;
 		}).catch((err) =>
 			res.status(404).send('your report is not found\n'+err)
 		);
@@ -75,34 +119,19 @@ app.get('/', async(req, res) => {
 			categories.excess ? categories.excess.push(report): categories.excess = [report];
 		}
 	})
-	// res.json(categories);
 	res.render('index', { categories: categories });
 });
 
-// app.get('/login', async (req,res) => {
-//   const scope = 'report:blood-glucose report:iron report:calcium report:vitamin-b12 report:vitamin-a report:milk-allergy report:peanuts-allergy report:egg-allergy';
-//   const authorizeUrl = genomeLink.OAuth.authorizeUrl({ scope: scope });
-// 	console.log('help');
-//   // Fetching a protected resource using an OAuth2 token if exists.
-//   let reports = [];
-//   if (req.session.oauthToken) {
-//     const scopes = scope.split(' ');
-//     reports = await Promise.all(scopes.map( async (name) => {
-//       return await genomeLink.Report.fetch({
-//         name: name.replace(/report:/g, ''),
-//         population: 'european',
-//         token: req.session.oauthToken
-//       });
-//     }));
-//   }
-// 	// res.render('login', {
-//   //   authorize_url: authorizeUrl,
-//   //   reports: reports,
-//   // });
-// });
 
-app.get('/insight/:healthIndicator', (req, res) => {
-	res.status(500).send('not implemented');
+app.get('/recipes/:query', (req, res) => {
+
+	fetch(`https://api.edamam.com/search?app_id=a793e502&app_key=ee354651f93c535869926a785bc53735&to=10&${req.params.query}`)
+	.then((response) => response.json())
+	.then((data) =>
+	// res.json(data)
+	res.render('recipes', {recipes: data.hits})
+	)
+	.catch((err) => res.status(500).send(err))
 })
 
 app.get('/callback', async (req, res) => {
