@@ -14,7 +14,26 @@ app.use(session({
 
 var hbs = require('express-handlebars')({
 	defaultLayout: 'main',
-	extname: '.hbs'
+	extname: '.hbs',
+	helpers: {
+		grouped_each: function(every, context, options) {
+	    var out = "", subcontext = [], i;
+	    if (context && context.length > 0) {
+	        for (i = 0; i < context.length; i++) {
+	            if (i > 0 && i % every === 0) {
+	                out += options.fn(subcontext);
+	                subcontext = [];
+	            }
+	            subcontext.push(context[i]);
+	        }
+	        out += options.fn(subcontext);
+	    }
+	    return out;
+		},
+		log: function(something) {
+  		console.log(something);
+		}
+	}
 });
 
 app.engine('hbs',hbs);

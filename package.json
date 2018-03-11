@@ -23,7 +23,8 @@
     "express-session": "^1.15.6",
     "genomelink-node": "^0.1.2",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
