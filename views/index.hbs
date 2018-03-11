@@ -1,25 +1,26 @@
+<h1 class = "heading"> Your genetic dietary profile </h1>
 
-<div class="container main-page">
+<style>
+    .background {
+        background-color: #5cb85c
+    }
+</style>
 
-  {{#each categories}}
-   <h2 class="category-key">{{@key}}</h2>
-     {{#each this}}
-       <div id="accordion{{id}}">
-         <div class="card">
-           <div class="card-header cheader" id="headingOne{{id}}">
-             <h7 >
-               <button class="btn btn-link" >
-                 {{name}}
-               </button>
-             </h7>
-           </div>
-           <div class="show-me" id="collapseOne{{id}}">
-             <div class="card-body">
-               {{description}}
-             </div>
-           </div>
-         </div>
-       </div>
-     {{/each}}
-  {{/each}}
-</div>
+<body class="background">
+    <div class="container">
+        <div>
+            {{#each categories}}
+           <h3>{{@key}}</h3>
+           <ul>
+             {{#each this}}
+               <li>{{name}}</li>
+               <!-- <ul style="display=none;">
+                 <li>{{description}}</li>
+               </ul> -->
+             {{/each}}
+           </ul>
+
+          {{/each}}
+        </div>
+    </div>
+</body>
