@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            .background {
-                background-color: #5cb85c;
-            }
-        </style>
+      
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     </head>
 
     <body class="background">
         <div class="row">
             <div class="col-m-6">
-                <h2 class="heading">Welcome</h2>
+                <h2 class="heading">Your genetic dietary profile</h2>
             </div>
+            <br/>
         </div>
-            <div class="container-fluid" style="flex-direction: row">
-                <div>
+
+            <div class="container-fluid">
+                <div style="padding-left: 100px">
                     {{#each categories}}
                    <h3>{{@key}}</h3>
-                   <div class="">
-                       <ul>
-                         {{#each this}}
-                           <li>{{name}}</li>
-                           <ul style="display=none;">
-                             <li>{{description}}</li>
-                             <li>{{score}}</li>
+                   <div class="container">
+                       <div class="well" style="width: 300px; margin-left: 50px">
+                           <ul>
+                             {{#each this}}
+                               <a><li data-toggle="popover" data-trigger="hover" data-content="{{description}}">{{name}}</li></a>
+                               <!-- <ul style="display=none;">
+                                 <li>{{description}}</li>
+                               </ul> -->
+                             {{/each}}
                            </ul>
-                         {{/each}}
-                       </ul>
-                   </div>
-
+                       </div>
+                    </div>
                   {{/each}}
                   <div class="ct-bar col-xs-6"></div>
                 </div>
@@ -88,5 +93,10 @@
               });
 
               </script>
+            <script>
+                $(document).ready(function(){
+                    $('[data-toggle="popover"]').popover();
+                });
+            </script>
     </body>
 </html>
