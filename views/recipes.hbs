@@ -1,0 +1,17 @@
+
+  <div class="container-fluid">
+    {{#each recipes}}
+      <div class="col-xs-4">
+        <div class="thumbnail" style="height: 290px;">
+          <div style="padding: 5px">
+          <a href="{{recipe.url}}">
+            <img class="media-object" src={{recipe.image}} alt={{recipe.label}} height="100px">
+          </a>
+        </div>
+          <div class="caption">
+            <h5>{{recipe.label}}</h5>
+          </div>
+        </div>
+      </div>
+  {{/each}}
+  </div>
