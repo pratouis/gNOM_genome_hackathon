@@ -21,7 +21,7 @@ app.engine('hbs',hbs);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
-const scope = 'report:blood-glucose report:iron report:calcium report:vitamin-b12 report:vitamin-a report:milk-allergy report:peanuts-allergy report:egg-allergy';
+const scope = 'report:blood-glucose report:milk-allergy report:peanuts-allergy report:egg-allergy report:carbohydrate-intake report:protein-intake';
 
 app.get('/login', (req, res) => {
   const authorizeUrl = genomeLink.OAuth.authorizeUrl({ scope: scope });
@@ -44,8 +44,7 @@ app.get('/', async(req, res) => {
 			token: req.session.oauthToken
 		});
 	}));
-
-	res.json(reports);
+	res.render('index', { reports: reports });
 });
 
 // app.get('/login', async (req,res) => {

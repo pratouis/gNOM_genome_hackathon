@@ -1,0 +1,14 @@
+<h1> welcome </h1>
+
+<table>
+  <tbody>
+    {{#each reports}}
+    <tr>
+      <td> {{phenotype.display_name}} </td>
+      <td> {{summary.text}} </td>
+      <td> {{summary.score}} </td>
+    </tr>
+    {{/each}}
+  </tbody>
+
+</table>
