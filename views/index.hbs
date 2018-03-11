@@ -1,26 +1,36 @@
-<h1 class = "heading"> Your genetic dietary profile </h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .background {
+                background-color: #5cb85c;
+            }
+        </style>
+    </head>
 
-<style>
-    .background {
-        background-color: #5cb85c
-    }
-</style>
-
-<body class="background">
-    <div class="container">
-        <div>
-            {{#each categories}}
-           <h3>{{@key}}</h3>
-           <ul>
-             {{#each this}}
-               <li>{{name}}</li>
-               <!-- <ul style="display=none;">
-                 <li>{{description}}</li>
-               </ul> -->
-             {{/each}}
-           </ul>
-
-          {{/each}}
+    <body class="background">
+        <div class="row">
+            <div class="col-m-6">
+                <h2 class="heading">Welcome</h2>
+            </div>
         </div>
-    </div>
-</body>
+            <div class="container-fluid">
+                <div>
+                    {{#each categories}}
+                   <h3>{{@key}}</h3>
+                   <div class="">
+                       <ul>
+                         {{#each this}}
+                           <li>{{name}}</li>
+                           <!-- <ul style="display=none;">
+                             <li>{{description}}</li>
+                           </ul> -->
+                         {{/each}}
+                       </ul>
+                   </div>
+
+                  {{/each}}
+                </div>
+            </div>
+    </body>
+</html>
