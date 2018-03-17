@@ -58,4 +58,8 @@ typings/
 .env
 env.sh
 
+#nontech related files for hackathon
+gNom-pressbriefing.docx
+test-users - test-users.csv
+
 .DS_Store

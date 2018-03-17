@@ -157,8 +157,8 @@ app.get('/recipes/:query', (req, res) => {
 	fetch(`https://api.edamam.com/search?app_id=a793e502&app_key=ee354651f93c535869926a785bc53735&to=10&${req.params.query}`)
 	.then((response) => response.json())
 	.then((data) =>
-	// res.json(data)
-	res.render('recipes', {recipes: data.hits})
+	res.json(data)
+	// res.render('recipes', {recipes: data.hits})
 	)
 	.catch((err) => res.status(500).send(err))
 })
